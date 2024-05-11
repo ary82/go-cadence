@@ -1,5 +1,12 @@
 # Go-Cadence
 
+### Start Cadence:
+
+```bash
+docker-compose up
+make cadence-init
+```
+
 ### Start the server:
 
 ```bash

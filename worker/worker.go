@@ -37,8 +37,12 @@ func StartWorker() {
 		TaskListName,
 		workerOptions)
 	// HelloWorld workflow registration
-	w.RegisterWorkflowWithOptions(workflows.HelloWorldWorkflow, workflow.RegisterOptions{Name: "cadence_samples.HelloWorldWorkflow"})
-	w.RegisterActivityWithOptions(workflows.HelloWorldActivity, activity.RegisterOptions{Name: "cadence_samples.HelloWorldActivity"})
+	w.RegisterWorkflowWithOptions(workflows.HelloWorldWorkflow, workflow.RegisterOptions{Name: "main.HelloWorldWorkflow"})
+	w.RegisterActivityWithOptions(workflows.HelloWorldActivity, activity.RegisterOptions{Name: "main.HelloWorldActivity"})
+
+	// Cron
+	w.RegisterWorkflowWithOptions(workflows.CronWorkflow, workflow.RegisterOptions{Name: "main.CronWorkflow"})
+	w.RegisterActivityWithOptions(workflows.CronActivity, activity.RegisterOptions{Name: "main.CronActivity"})
 
 	err := w.Start()
 	if err != nil {

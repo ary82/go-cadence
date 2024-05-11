@@ -3,6 +3,7 @@ module github.com/ary82/go-cadence
 go 1.22.3
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/uber-go/tally v3.5.10+incompatible
 	github.com/uber/cadence-idl v0.0.0-20240416202333-83d5cae7fc51
 	go.uber.org/cadence v1.2.9

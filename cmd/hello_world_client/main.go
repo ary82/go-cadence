@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/ary82/go-cadence/worker"
@@ -23,6 +24,7 @@ func main() {
 
 	workflowType := "main.HelloWorldWorkflow"
 	input := []byte(`"World"`)
+	cron := "* * * * *"
 
 	req := shared.StartWorkflowExecutionRequest{
 		Domain:     &domain,
@@ -37,7 +39,9 @@ func main() {
 		ExecutionStartToCloseTimeoutSeconds: &executionTimeout,
 		TaskStartToCloseTimeoutSeconds:      &closeTimeout,
 		RequestId:                           &requestID,
+		CronSchedule:                        &cron,
 	}
+	// TODO: Conditional cron
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
@@ -48,4 +52,20 @@ func main() {
 	}
 
 	logger.Info("successfully started HelloWorld workflow", zap.String("runID", resp.GetRunId()))
+
+	time.Sleep(2 * time.Minute)
+
+	ctx, cancel = context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	treq := &shared.TerminateWorkflowExecutionRequest{
+		Domain: &domain,
+		WorkflowExecution: &shared.WorkflowExecution{
+			WorkflowId: &workflowID,
+		},
+		// FirstExecutionRunID: resp.RunId,
+	}
+	err = cadenceClient.TerminateWorkflowExecution(ctx, treq)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

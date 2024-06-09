@@ -35,7 +35,8 @@ func StartWorker() {
 		cadenceClient,
 		Domain,
 		TaskListName,
-		workerOptions)
+		workerOptions,
+	)
 	// HelloWorld workflow registration
 	w.RegisterWorkflowWithOptions(workflows.HelloWorldWorkflow, workflow.RegisterOptions{Name: "main.HelloWorldWorkflow"})
 	w.RegisterActivityWithOptions(workflows.HelloWorldActivity, activity.RegisterOptions{Name: "main.HelloWorldActivity"})
